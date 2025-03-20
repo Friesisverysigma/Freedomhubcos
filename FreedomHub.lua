@@ -1,4 +1,4 @@
--- Freedom Hub UI with Token Auto Farm Integration (Enhanced UI)
+-- Freedom Hub UI with Token Auto Farm Integration (Enhanced UI with Animations & Styling)
 
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
@@ -14,12 +14,20 @@ ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 -- Main UI Frame
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-Frame.Size = UDim2.new(0, 350, 0, 250)
-Frame.Position = UDim2.new(0.5, -175, 0.5, -125)
+Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+Frame.Size = UDim2.new(0, 400, 0, 300)
+Frame.Position = UDim2.new(0.5, -200, 0.5, -150)
 Frame.Visible = true
 Frame.BorderSizePixel = 2
 Frame.BorderColor3 = Color3.fromRGB(255, 105, 180)
+Frame.BackgroundTransparency = 0.2
+Frame.ClipsDescendants = true
+Frame.Active = true
+
+-- UI Fade In Animation
+Frame.Size = UDim2.new(0, 0, 0, 0)
+local fadeTween = TweenService:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 400, 0, 300)})
+fadeTween:Play()
 
 -- Title
 Title.Parent = Frame
@@ -39,26 +47,35 @@ TokenFarmSection.BackgroundTransparency = 1
 -- Toggle Button (Switch Style)
 TokenFarmToggle.Parent = TokenFarmSection
 TokenFarmToggle.Text = ""
-TokenFarmToggle.Size = UDim2.new(0, 60, 0, 30)
-TokenFarmToggle.Position = UDim2.new(0.5, -30, 0.5, -15)
-TokenFarmToggle.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+TokenFarmToggle.Size = UDim2.new(0, 80, 0, 40)
+TokenFarmToggle.Position = UDim2.new(0.5, -40, 0.5, -20)
+TokenFarmToggle.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 TokenFarmToggle.BorderSizePixel = 2
 TokenFarmToggle.BorderColor3 = Color3.fromRGB(255, 105, 180)
 TokenFarmToggle.AutoButtonColor = false
+TokenFarmToggle.ClipsDescendants = true
+TokenFarmToggle.Rounded = true
 
 -- Toggle Indicator (Sliding Circle)
 ToggleIndicator.Parent = TokenFarmToggle
-ToggleIndicator.Size = UDim2.new(0, 26, 0, 26)
+ToggleIndicator.Size = UDim2.new(0, 36, 0, 36)
 ToggleIndicator.Position = UDim2.new(0, 2, 0, 2)
 ToggleIndicator.BackgroundColor3 = Color3.fromRGB(255, 105, 180)
 ToggleIndicator.BorderSizePixel = 0
+ToggleIndicator.Rounded = true
 
 -- Toggle Function with Smooth Slide Effect
 TokenFarmToggle.MouseButton1Click:Connect(function()
     enabledTokenAutoFarm = not enabledTokenAutoFarm
-    local newPosition = enabledTokenAutoFarm and UDim2.new(1, -28, 0, 2) or UDim2.new(0, 2, 0, 2)
-    local tween = TweenService:Create(ToggleIndicator, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = newPosition})
-    tween:Play()
+    local newPosition = enabledTokenAutoFarm and UDim2.new(1, -38, 0, 2) or UDim2.new(0, 2, 0, 2)
+    local colorGoal = enabledTokenAutoFarm and Color3.fromRGB(0, 255, 127) or Color3.fromRGB(255, 105, 180)
+    
+    local slideTween = TweenService:Create(ToggleIndicator, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = newPosition})
+    slideTween:Play()
+    
+    local colorTween = TweenService:Create(ToggleIndicator, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = colorGoal})
+    colorTween:Play()
+    
     if enabledTokenAutoFarm then
         loadstring([[
             local function TP(Target, Duration)
