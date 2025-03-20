@@ -1,7 +1,8 @@
--- Freedom Hub UI with Token Auto Farm Integration (Enhanced UI with Animations & Styling)
+-- Freedom Hub UI with Sidebar & Enhanced Design
 
 local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
+local MainFrame = Instance.new("Frame")
+local Sidebar = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
 local TokenFarmSection = Instance.new("Frame")
 local TokenFarmToggle = Instance.new("TextButton")
@@ -13,35 +14,37 @@ local enabledTokenAutoFarm = false
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 -- Main UI Frame
-Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-Frame.Size = UDim2.new(0, 400, 0, 300)
-Frame.Position = UDim2.new(0.5, -200, 0.5, -150)
-Frame.Visible = true
-Frame.BorderSizePixel = 2
-Frame.BorderColor3 = Color3.fromRGB(255, 105, 180)
-Frame.BackgroundTransparency = 0.2
-Frame.ClipsDescendants = true
-Frame.Active = true
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+MainFrame.Size = UDim2.new(0, 500, 0, 300)
+MainFrame.Position = UDim2.new(0.5, -250, 0.5, -150)
+MainFrame.Visible = true
+MainFrame.BorderSizePixel = 2
+MainFrame.BorderColor3 = Color3.fromRGB(255, 105, 180)
+MainFrame.BackgroundTransparency = 0.1
+MainFrame.ClipsDescendants = true
+MainFrame.Active = true
 
--- UI Fade In Animation
-Frame.Size = UDim2.new(0, 0, 0, 0)
-local fadeTween = TweenService:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 400, 0, 300)})
-fadeTween:Play()
+-- Sidebar
+Sidebar.Parent = MainFrame
+Sidebar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Sidebar.Size = UDim2.new(0, 120, 1, 0)
+Sidebar.Position = UDim2.new(0, 0, 0, 0)
+Sidebar.BorderSizePixel = 0
 
 -- Title
-Title.Parent = Frame
+Title.Parent = Sidebar
 Title.Text = "Freedom Hub"
-Title.Size = UDim2.new(1, 0, 0.15, 0)
+Title.Size = UDim2.new(1, 0, 0.1, 0)
 Title.TextColor3 = Color3.fromRGB(255, 105, 180)
 Title.BackgroundTransparency = 1
 Title.Font = Enum.Font.GothamBold
 Title.TextScaled = true
 
 -- Token Farm Section
-TokenFarmSection.Parent = Frame
-TokenFarmSection.Size = UDim2.new(1, 0, 0.3, 0)
-TokenFarmSection.Position = UDim2.new(0, 0, 0.3, 0)
+TokenFarmSection.Parent = MainFrame
+TokenFarmSection.Size = UDim2.new(1, -120, 0.3, 0)
+TokenFarmSection.Position = UDim2.new(0, 120, 0.3, 0)
 TokenFarmSection.BackgroundTransparency = 1
 
 -- Toggle Button (Switch Style)
@@ -53,8 +56,6 @@ TokenFarmToggle.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 TokenFarmToggle.BorderSizePixel = 2
 TokenFarmToggle.BorderColor3 = Color3.fromRGB(255, 105, 180)
 TokenFarmToggle.AutoButtonColor = false
-TokenFarmToggle.ClipsDescendants = true
-TokenFarmToggle.Rounded = true
 
 -- Toggle Indicator (Sliding Circle)
 ToggleIndicator.Parent = TokenFarmToggle
@@ -62,7 +63,6 @@ ToggleIndicator.Size = UDim2.new(0, 36, 0, 36)
 ToggleIndicator.Position = UDim2.new(0, 2, 0, 2)
 ToggleIndicator.BackgroundColor3 = Color3.fromRGB(255, 105, 180)
 ToggleIndicator.BorderSizePixel = 0
-ToggleIndicator.Rounded = true
 
 -- Toggle Function with Smooth Slide Effect
 TokenFarmToggle.MouseButton1Click:Connect(function()
